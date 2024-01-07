@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { userRegisterCredentials } from '../validations/user.validation';
+import {useDispatch, useSelector} from 'react-redux';
+import { FAILURE, REGISTER_SUCCESS, REQUEST } from '../redux/actionTypes';
+const backendServerUrl = import.meta.env.VITE_BACKEND_SERVER_URL;
 
 const initialState = { email: '', password: '', name: '' }
 
 const Register = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const store = useSelector(store => store);
     const [userCred, setUserCred] = useState(initialState);
 
     const handleChange = (e) => {
@@ -11,11 +19,31 @@ const Register = () => {
         setUserCred({ ...userCred, [name]: value });
     };
 
+    const handleSubmit = (evnt)=>{
+        evnt.preventDefault();
+        const check = userRegisterCredentials.safeParse(userCred);
+        if(!check.success) return alert('Enter correct credentials');
+        sendCredentials();
+    }
+
+    const sendCredentials = async()=>{
+        try{
+            dispatch({type: REQUEST})
+            const res = await axios.post(`${backendServerUrl}user/register`, userCred);
+            dispatch({type: REGISTER_SUCCESS})
+            console.log(store);
+            navigate('/login');
+        }catch(err){
+            console.log(err);
+            dispatch({type: FAILURE, payload: err.data.Error})
+        }
+    }
+
     return (
         <div style={styles.body}>
             <div style={styles.container}>
-                <h2 style={styles['container>h1']}>Login</h2>
-                <form style={styles.form}>
+                <h2 style={styles['container>h1']}>Register</h2>
+                <form style={styles.form} onSubmit={handleSubmit}>
                     <input style={styles.inputBox} placeholder='Name' type='text' name='name' value={userCred.name} onChange={handleChange} required />
                     <input style={styles.inputBox} placeholder='Email' type='email' name='email' value={userCred.email} onChange={handleChange} required />
                     <input style={styles.inputBox} placeholder='Password' type='password' name='password' value={userCred.password} onChange={handleChange} required />

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import {useSelector} from 'react-redux';
+import { userData } from '../validations/userData.validation';
 
 const UserForm = () => {
+  const token = useSelector(store => store.token);
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -10,6 +13,9 @@ const UserForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name==='age'){
+      setFormData({...formData, age: Number(value)})
+    }else
     setFormData({ ...formData, [name]: value });
   };
 
@@ -20,50 +26,52 @@ const UserForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted with data:', formData);
+    const check = userData.safeParse({name: formData.name, age: formData.age, address: formData.address});
+    console.log(check);
+    if(!check.success) return alert('Invalid Inputs');
+    sendData(formData);
   };
 
+  const sendData = async(data)=>{
+    try{
+      console.log(data);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   return (
-    <div>
+    <div style={styles.userFormContainer}>
       <h2>User Information Form</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
+      <form onSubmit={handleSubmit} style={styles.userForm}>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            required
-          />
-        </label>
+            placeholder='Name'
+            style={styles.inputboxes}
+            />
         <br />
 
-        <label>
-          Age:
           <input
+            style={styles.inputboxes}
             type="number"
             name="age"
             value={formData.age}
             onChange={handleChange}
-            required
-          />
-        </label>
+            placeholder='Age'
+            />
         <br />
 
-        <label>
-          Address:
           <textarea
             name="address"
             value={formData.address}
             onChange={handleChange}
-            required
-          />
-        </label>
+            placeholder='Address'
+            style={styles.inputboxes}
+            />
         <br />
-
-        <label>
-          Photo:
           <input
             type="file"
             accept="image/*"
@@ -71,13 +79,30 @@ const UserForm = () => {
             onChange={handleFileChange}
             required
           />
-        </label>
         <br />
 
-        <button type="submit">Submit</button>
+        <button type="submit" style={styles.inputboxes}>Submit</button>
       </form>
     </div>
   );
 };
 
 export default UserForm;
+
+const styles = {
+  userFormContainer: {
+    display: 'flex',
+    border: '1px solid black',
+    width: 'fit-content',
+    flexDirection: 'column',
+    padding: '20px'
+  },
+  userForm:{
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  inputboxes: {
+    height: '2.5rem',
+    padding: '0 12px'
+  }
+}
