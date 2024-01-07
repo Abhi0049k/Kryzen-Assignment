@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./configs/db');
+const userRouter = require('./routes/user.routes');
 require('dotenv').config();
 
 const app = express();
@@ -13,9 +14,11 @@ app.get('/', (req, res)=>{
     res.status(200).send({msg: 'Welcome to Kryzen Assignment'});
 })
 
+app.use('/user', userRouter);
+
 app.use((err, req, res, next)=>{
     res.status(err.status || 500);
-    res.send({Error: err.msg || 'Internal Server Error'});
+    res.send({Error: err.message || 'Internal Server Error'});
 })
 
 app.listen(PORT, ()=>{
