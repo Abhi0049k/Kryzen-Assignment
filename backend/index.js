@@ -3,7 +3,6 @@ const cors = require('cors');
 const connection = require('./configs/db');
 const userRouter = require('./routes/user.routes');
 const formRouter = require('./routes/form.routes');
-const pdfRouter = require('./routes/pdf.routes');
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
