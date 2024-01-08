@@ -1,5 +1,6 @@
 export const REQUEST = 'REQUEST';
 export const FAILURE = 'FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const PDF_CREATED = 'PDF_CREATED';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const LOGOUT_SUCCESS= 'LOGOUT_SUCCESS';

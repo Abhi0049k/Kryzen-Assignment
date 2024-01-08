@@ -4,6 +4,7 @@ const connection = require('./configs/db');
 const userRouter = require('./routes/user.routes');
 const formRouter = require('./routes/form.routes');
 const fileUpload = require('express-fileupload');
+const pdfRouter = require('./routes/pdf.routes');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +24,8 @@ app.get('/', (req, res)=>{
 app.use('/user', userRouter);
 
 app.use('/form', formRouter);
+
+app.use('/pdfs', pdfRouter)
 
 app.use((err, req, res, next)=>{
     res.status(err.status || 500);

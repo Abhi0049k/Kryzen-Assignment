@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { userData } from '../validations/userData.validation';
+import { FAILURE, PDF_CREATED, REQUEST } from '../redux/actionTypes';
 const backendServerUrl = import.meta.env.VITE_BACKEND_SERVER_URL;
 
 const UserForm = () => {
-  const token = useSelector(store => store.token);
+  const {isLoading, token} = useSelector(store => store);
+  const dispatch = useDispatch()
   const [userDt, setuserDt] = useState({
     name: '',
     age: '',
@@ -30,6 +32,7 @@ const UserForm = () => {
     e.preventDefault();
     const check = userData.safeParse({ name: userDt.name, age: userDt.age, address: userDt.address });
     if (!check.success) return alert('Invalid Inputs');
+    dispatch({type: REQUEST});
     sendData(userDt);
   };
 
@@ -41,15 +44,15 @@ const UserForm = () => {
         formData.append('age', data.age);
         formData.append('address', data.address);
         formData.append('photo', data.photo);
-        console.log(formData);
         const res = await axios.post(`${backendServerUrl}form/submit-form`, formData, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
-        console.log(res.data);
+        dispatch({type: PDF_CREATED, payload: {url: res.data.pdfUrl, name: res.data.pdfName}})
       }else console.log('Photo not found');
     } catch (err) {
+      dispatch({type: FAILURE, payload: err.data.Error})
       console.log(err);
     }
   }
@@ -94,7 +97,11 @@ const UserForm = () => {
         />
         <br />
 
-        <button type="submit" style={styles.inputboxes}>Submit</button>
+        <button type="submit" style={styles.inputboxes}>
+          {
+            isLoading? 'Loading...': 'Submit'
+          }
+        </button>
       </form>
     </div>
   );
