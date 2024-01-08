@@ -113,8 +113,8 @@ export default UserForm;
 
 const styles = {
   formContainer: {
+    paddingTop: '3rem',
     width: '50%',
-    border: '1px solid black',
     display: 'flex',
     justifyContent: 'center'
   },
