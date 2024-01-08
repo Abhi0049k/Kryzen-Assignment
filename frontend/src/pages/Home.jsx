@@ -1,14 +1,12 @@
 import UserForm from "../components/Form";
 import Navbar from "../components/Navbar";
-import PDFPreview from "../components/PDFPreview";
 
 const Home = () => {
     return (
         <div>
-            <Navbar />
+            <Navbar/>
             <div style={styles["main-container"]}>
                 <UserForm />
-                <PDFPreview/>
             </div>
         </div>
     )
