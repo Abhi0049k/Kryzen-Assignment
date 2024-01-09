@@ -32,8 +32,8 @@ const submitForm = async (req, res, next)=>{
         fs.unlinkSync(imagePath);
         
         const pdfName = `${Date.now()}.pdf`
-        // const pdfPath = path.join('..', 'pdfs', pdfName)
-        const pdfStream = fs.createWriteStream(pdfName);
+        const pdfPath = path.join(__dirname,'..', 'pdfs', pdfName)
+        const pdfStream = fs.createWriteStream(pdfPath);
         doc.pipe(pdfStream);
         doc.end();
 
@@ -44,10 +44,9 @@ const submitForm = async (req, res, next)=>{
 
         const newForm = new formModel({name, age, address, photoUrl: result.url, securePhotoUrl: result.secure_url, pdfUrl: `${BACKEND_SERVER_URL}pdfs/${pdfName}`, securePdfUrl: `${BACKEND_SERVER_URL}pdfs/${pdfName}`, pdfName,userId});
         await newForm.save();
-        console.log(newForm);
         res.status(200).send(newForm);
     }catch(err){
-        console.log(err);
+        console.log(err.message);
         next(err);
     }
 }
