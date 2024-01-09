@@ -9,6 +9,7 @@ const initialState = { email: '', password: '' }
 
 const Login = () => {
     const [userCred, setUserCred] = useState(initialState);
+    const {isLoading} = useSelector(store=> store);
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
@@ -33,7 +34,7 @@ const Login = () => {
             navigate('/');
         } catch (err) {
             console.log(err);
-            dispatch({ type: FAILURE, payload: err.data.Error })
+            dispatch({ type: FAILURE, payload: err.response.data.Error })
         }
     }
 
@@ -44,7 +45,7 @@ const Login = () => {
                 <form style={styles.form} onSubmit={handleSubmit}>
                     <input style={styles.inputBox} placeholder='Email' type='email' name='email' value={userCred.email} onChange={handleChange} />
                     <input style={styles.inputBox} placeholder='Password' type='password' name='password' value={userCred.password} onChange={handleChange} />
-                    <input style={styles.button} type="submit" value="Login" />
+                    <input style={styles.button} type="submit" value={isLoading ? "Loading...": "Login"} />
                 </form>
                 <div style={styles.redirecting}>
                     New User? <Link to={'/register'}>Register</Link>

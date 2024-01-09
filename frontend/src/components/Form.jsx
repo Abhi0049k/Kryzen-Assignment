@@ -52,7 +52,7 @@ const UserForm = () => {
         dispatch({ type: PDF_CREATED, payload: { url: res.data.pdfUrl, name: res.data.pdfName } })
       } else console.log('Photo not found');
     } catch (err) {
-      dispatch({ type: FAILURE, payload: err.data.Error })
+      dispatch({ type: FAILURE, payload: err.response.data.Error })
       console.log(err);
     }
   }

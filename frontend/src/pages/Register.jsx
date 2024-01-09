@@ -11,7 +11,7 @@ const initialState = { email: '', password: '', name: '' }
 const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const store = useSelector(store => store);
+    const {isLoading} = useSelector(store => store);
     const [userCred, setUserCred] = useState(initialState);
 
     const handleChange = (e) => {
@@ -31,11 +31,10 @@ const Register = () => {
             dispatch({type: REQUEST})
             const res = await axios.post(`${backendServerUrl}user/register`, userCred);
             dispatch({type: REGISTER_SUCCESS})
-            console.log(store);
             navigate('/login');
         }catch(err){
             console.log(err);
-            dispatch({type: FAILURE, payload: err.data.Error})
+            dispatch({type: FAILURE, payload: err.response.data.Error})
         }
     }
 
@@ -47,7 +46,7 @@ const Register = () => {
                     <input style={styles.inputBox} placeholder='Name' type='text' name='name' value={userCred.name} onChange={handleChange} required />
                     <input style={styles.inputBox} placeholder='Email' type='email' name='email' value={userCred.email} onChange={handleChange} required />
                     <input style={styles.inputBox} placeholder='Password' type='password' name='password' value={userCred.password} onChange={handleChange} required />
-                    <input style={styles.button} type="submit" value="Register" />
+                    <input style={styles.button} type="submit" value={isLoading? "Registering": "Register"} />
                 </form>
                 <div style={styles.redirecting}>
                     Already an user? <Link to={'/login'}>Login</Link>
