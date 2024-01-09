@@ -5,6 +5,7 @@ const pdfRouter = express.Router();
 
 pdfRouter.get('/:name', (req, res, next)=>{
     const {name} = req.params;
+    console.log(name);
     // const filePath = path.join(__dirname, '..','pdfs', name);
     res.status(200).sendFile(name, (err)=>{
         if(err){

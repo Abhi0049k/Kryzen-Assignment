@@ -44,6 +44,7 @@ const submitForm = async (req, res, next)=>{
 
         const newForm = new formModel({name, age, address, photoUrl: result.url, securePhotoUrl: result.secure_url, pdfUrl: `${BACKEND_SERVER_URL}pdfs/${pdfName}`, securePdfUrl: `${BACKEND_SERVER_URL}pdfs/${pdfName}`, pdfName,userId});
         await newForm.save();
+        console.log(newForm);
         res.status(200).send(newForm);
     }catch(err){
         console.log(err);
