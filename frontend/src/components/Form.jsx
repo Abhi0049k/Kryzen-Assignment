@@ -52,6 +52,7 @@ const UserForm = () => {
         dispatch({ type: PDF_CREATED, payload: { url: res.data.pdfUrl, name: res.data.pdfName } })
       } else console.log('Photo not found');
     } catch (err) {
+      alert('Something went wrong while submitting the form. Please try again later.')
       dispatch({ type: FAILURE, payload: err.response.data.Error })
       console.log(err);
     }

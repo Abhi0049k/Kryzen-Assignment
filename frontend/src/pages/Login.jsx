@@ -35,6 +35,7 @@ const Login = () => {
         } catch (err) {
             console.log(err);
             dispatch({ type: FAILURE, payload: err.response.data.Error })
+            alert('Something went wrong while submitting the form. Please try again later.')
         }
     }
 
