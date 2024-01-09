@@ -2,7 +2,7 @@ const path = require('path');
 
 const pdfs = (req, res, next)=>{
     const {name} = req.params;
-    const filePath = path.join(__dirname, '..', 'pdfs', name);
+    const filePath = path.join('backend', 'pdfs', name);
     res.status(200).sendFile(filePath, (err)=>{
         if(err){
             console.log(err);
