@@ -7,6 +7,7 @@ const cloudinary = require("../configs/cloudinary");
 require('dotenv').config();
 
 const submitForm = async (req, res, next)=>{
+    const BACKEND_SERVER_URL = process.env.BACKEND_SERVER_URL;
     const files = req.files.photo;
     const {name, age, address, userId} = req.body;
     if(!files) next({status: 404, message: 'Photo not found'});

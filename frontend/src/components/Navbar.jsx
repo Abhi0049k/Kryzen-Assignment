@@ -10,7 +10,7 @@ const Navbar = () => {
                     pdfRoute ? (
                         <>
                             <a style={styles['navbar>button']} href={pdfRoute} target='_blank'>Preview</a>
-                            <a href={pdfRoute} download={'output.pdf'} style={styles["navbar>button"]}>Download PDF</a>
+                            <a href={pdfRoute} target='_blank' download='' style={styles["navbar>button"]}>Download PDF</a>
                         </>
                     ) : ''
                 }

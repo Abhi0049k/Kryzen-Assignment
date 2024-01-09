@@ -30,7 +30,7 @@ const Login = () => {
             const res = await axios.post(`${backendServerUrl}user/login`, userCred);
             document.cookie=`token=${res.data.token}`;
             dispatch({ type: LOGIN_SUCCESS, payload: res.data.token })
-            navigate('/protected');
+            navigate('/');
         } catch (err) {
             console.log(err);
             dispatch({ type: FAILURE, payload: err.data.Error })
