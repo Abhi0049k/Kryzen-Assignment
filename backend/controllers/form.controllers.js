@@ -32,7 +32,7 @@ const submitForm = async (req, res, next)=>{
         fs.unlinkSync(imagePath);
         
         const pdfName = `${Date.now()}.pdf`
-        const pdfPath = path.join(__dirname,'..', 'pdfs', pdfName)
+        const pdfPath = path.join('backend', 'pdfs', pdfName)
         const pdfStream = fs.createWriteStream(pdfPath);
         doc.pipe(pdfStream);
         doc.end();
