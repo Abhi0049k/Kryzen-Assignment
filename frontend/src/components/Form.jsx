@@ -123,6 +123,7 @@ const styles = {
     display: 'flex',
     border: '1px solid black',
     width: 'fit-content',
+    height: 'fit-content',
     flexDirection: 'column',
     padding: '20px',
   },
