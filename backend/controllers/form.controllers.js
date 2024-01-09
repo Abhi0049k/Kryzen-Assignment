@@ -33,7 +33,7 @@ const submitForm = async (req, res, next)=>{
         
         const pdfName = `${Date.now()}.pdf`
         // const pdfPath = path.join('..', 'pdfs', pdfName)
-        const pdfStream = fs.createWriteStream(pdfPath);
+        const pdfStream = fs.createWriteStream(pdfName);
         doc.pipe(pdfStream);
         doc.end();
 
