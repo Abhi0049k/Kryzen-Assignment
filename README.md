@@ -3,6 +3,10 @@
 ## Project Overview
 
 Welcome to the Kryzen project! This Node.js and React.js application focuses on user authentication, data collection via a form, and the ability to display and download collected data in PDF format.
+***
+FrontendURL: https://frontend-abhi0049k.vercel.app
+BackendURL: https://kryzenassignment.onrender.com/
+
 
 ## Technologies
 
