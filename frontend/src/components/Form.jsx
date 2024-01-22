@@ -13,6 +13,8 @@ const UserForm = () => {
     age: '',
     address: '',
     photo: null,
+    n: 0,
+    selection: ''
   });
 
   const handleChange = (e) => {
@@ -30,7 +32,7 @@ const UserForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const check = userData.safeParse({ name: userDt.name, age: userDt.age, address: userDt.address });
+    const check = userData.safeParse({ name: userDt.name, age: userDt.age, address: userDt.address, n: userDt.n, selection: userDt.selection });
     if (!check.success) return alert('Invalid Inputs');
     dispatch({ type: REQUEST });
     sendData(userDt);
@@ -44,18 +46,30 @@ const UserForm = () => {
         formData.append('age', data.age);
         formData.append('address', data.address);
         formData.append('photo', data.photo);
+        formData.append('n', data.n);
+        formData.append('selection', data.selection);
         const res = await axios.post(`${backendServerUrl}form/submit-form`, formData, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
-        dispatch({ type: PDF_CREATED, payload: { url: res.data.pdfUrl, name: res.data.pdfName } })
+        dispatch({ type: PDF_CREATED, payload: { name: res.data.name, age: res.data.age, address: res.data.address, photoUrl: res.data.securePhotoUrl} })
       } else console.log('Photo not found');
     } catch (err) {
       alert('Something went wrong while submitting the form. Please try again later.')
       dispatch({ type: FAILURE, payload: err.response.data.Error })
       console.log(err);
     }
+  }
+
+  const handleNumChange = (e)=>{
+    const val = Number(e.target.value);
+    setuserDt({...userDt, n: val});
+  }
+
+  const handleSelectChange = (e)=>{
+    const val = e.target.value;
+    setuserDt({...userDt, selection: val});
   }
 
   return (
@@ -98,6 +112,12 @@ const UserForm = () => {
             required
           />
           <br />
+          <input type="number" name="n" onChange={handleNumChange} value={userDt.n}/>
+          <select name="options" onChange={handleSelectChange}>
+            <option value="">Select</option>
+            <option value="sum">Sum</option>
+            <option value="average">Average</option>
+          </select>
 
           <button type="submit" style={styles.inputboxes}>
             {

@@ -6,8 +6,10 @@ const initialState = {
     isLoading: false,
     errorMessage: '',
     token: '',
-    pdfRoute: '',
-    pdfName: ''
+    address: '',
+    name: '',
+    age: '',
+    photoUrl: ''
 }
 
 export const reducer = (state = initialState, {type, payload})=>{
@@ -23,7 +25,7 @@ export const reducer = (state = initialState, {type, payload})=>{
         case LOGOUT_SUCCESS:
             return {...state, isLoading: false, isError: false, token: '', isAuth: false}
         case PDF_CREATED:
-            return {...state, isLoading: false, isError: false, pdfRoute: payload.url, pdfName: payload.name}
+            return {...state, isLoading: false, isError: false, address: payload.address, name: payload.name, age: payload.age, photoUrl: payload.photoUrl}
         default:
             return state;
     }

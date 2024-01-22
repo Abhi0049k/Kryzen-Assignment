@@ -1,16 +1,18 @@
 import UserForm from "../components/Form";
 import Navbar from "../components/Navbar";
 import { useSelector } from 'react-redux';
+import Preview from "../components/Preview";
 
 const Home = () => {
-    const {pdfRoute} = useSelector(store=> store)
+    const { address, name, age, photoUrl } = useSelector(store => store);
+    console.log('address: ', address, name, age, photoUrl);
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <div style={styles["main-container"]}>
                 <UserForm />
                 {
-                    pdfRoute ? <iframe src={pdfRoute} style={styles.preview}/> : " "
+                    address ? <Preview/> : ' '
                 }
             </div>
         </div>

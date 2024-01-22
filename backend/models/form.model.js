@@ -6,9 +6,6 @@ const formSchema = new mongoose.Schema({
     address: String,
     photoUrl: String,
     securePhotoUrl: String,
-    pdfUrl: String,
-    pdfName: String,
-    securePdfUrl: String,
     userId: mongoose.Schema.Types.ObjectId
 });
 
